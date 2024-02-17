@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ADD_PROJECT } from '../mutations/projectMutations';
 import { GET_PROJECTS } from '../quries/ProjectQueries';
 import { GET_CLIENTS } from '../quries/ClientQuries';
+import toast from 'react-hot-toast';
 
 export default function AddProjectModal() {
   const [name, setName] = useState('');
@@ -20,6 +21,12 @@ export default function AddProjectModal() {
         data: { projects: [...projects, addProject] },
       });
     },
+    onCompleted: () => {
+      toast.success('Project Added');
+    },
+    onError: () => {
+      toast.error('Project not added, something went wrong!');
+    }
   });
 
   // Get Clients for select

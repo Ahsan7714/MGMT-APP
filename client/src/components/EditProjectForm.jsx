@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { GET_PROJECT } from "../quries/ProjectQueries";
 import { UPDATE_PROJECT } from "../mutations/projectMutations";
+import { toast } from "react-hot-toast";
 
 export default function EditProjectForm({ project }) {
   const [name, setName] = useState(project.name);
@@ -13,15 +14,21 @@ export default function EditProjectForm({ project }) {
       case "In Progress":
         return "progress";
       case "Completed":
-        return "done";
+        return "completed";
       default:
-        throw new Error(`Unknown status: ${project.status}`);
+        return "new";
     }
   });
 
   const [updateProject] = useMutation(UPDATE_PROJECT, {
     variables: { id: project.id, name, description, status },
     refetchQueries: [{ query: GET_PROJECT, variables: { id: project.id } }],
+    onCompleted: () => {
+      toast.success("Project Updated");
+    },
+    onError: (error) => {
+      toast.error(`Error updating project: ${error.message}`);
+    },
   });
 
   const onSubmit = (e) => {
@@ -32,6 +39,7 @@ export default function EditProjectForm({ project }) {
     }
 
     updateProject(name, description, status);
+  
   };
 
   return (

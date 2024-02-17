@@ -100,7 +100,7 @@ deleteClient: {
             values: {
               new: { value: "not started" },
               progress: { value: "In Progress" },
-              done: { value: "Completed" },
+              completed: { value: "Completed" },
             },
             default: "not started",
           }),

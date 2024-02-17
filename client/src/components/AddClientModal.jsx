@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { GET_CLIENTS } from "../quries/ClientQuries";
 import { ADD_CLIENT } from "../mutations/ClientMutations";
+import toast from "react-hot-toast";
 
 
 const AddClientModal = () => {
@@ -31,6 +32,11 @@ const AddClientModal = () => {
         }
     
         addClient(name, email, phone);
+        if(addClient){
+            toast.success('Client Added');
+        }else{
+            toast.error('CLinet not added, something went wrong!');
+        }
     
         setName('');
         setEmail('');

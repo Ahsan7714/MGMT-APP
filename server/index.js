@@ -9,7 +9,15 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 
 connectDB();
-app.use(cors());
+app.use(
+  cors({
+    
+    // origin: ["http://localhost:8000"],
+    origin: ["https://mgmt-app-gamma.vercel.app/"],
+    
+    credentials: true,
+  })
+);
 
 app.use('/graphql', graphqlHTTP({
     schema,
